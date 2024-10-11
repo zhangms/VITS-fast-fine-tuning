@@ -50,7 +50,7 @@ class Predictor:
         wavfile.write(output_path + ".0.wav", 22050, audio)
         audio = np.int16(audio * 32768)
         wavfile.write(output_path + ".1.wav", 22050, audio)
-        audio = AudioSegment.from_wav(output_path + ".s1.wav")
+        audio = AudioSegment.from_wav(output_path + ".1.wav")
         audio.export(output_path + ".2.mp3", format="mp3")
 
 
