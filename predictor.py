@@ -54,10 +54,14 @@ class Predictor:
         audio = AudioSegment.from_wav(wav)
         os.remove(wav)
         audio.export(output_path, format="mp3")
+        return "OK"
 
     def tts_fn(self, text, speaker_id, output_path):
-        n_speaker_id = self.hps["speakers"][speaker_id]
-        self.tts_fn_id(text, n_speaker_id, output_path)
+        if speaker_id not in self.hps["speakers"]:
+            n_speaker_id = self.hps["speakers"][speaker_id]
+            return self.tts_fn_id(text, n_speaker_id, output_path)
+        else:
+            return "speaker not exists:" + speaker_id
 
 
 if __name__ == '__main__':
@@ -71,7 +75,6 @@ if __name__ == '__main__':
 
     print(predictor.hps["speakers"]["Binary"])
     print(predictor.hps["speakers"]["Dara"])
-    print(predictor.hps["speakers"]["FFF"])
 
     predictor.tts_fn("Hey there! I'm always down for a chat. What's on your mind?", "Binary",
                      "/workspace/res/output/test0.mp3")
