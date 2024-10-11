@@ -28,6 +28,7 @@ class Predictor:
             **self.hps.model).to(device)
         _ = self.net_g.eval()
         _ = utils.load_checkpoint(model_path, self.net_g, None)
+        self.tts_fn_id("hello world", 0, "warmup.mp3")
 
     def get_text(self, text, is_symbol):
         text_norm = text_to_sequence(text, self.hps.symbols, [] if is_symbol else self.hps.data.text_cleaners)
