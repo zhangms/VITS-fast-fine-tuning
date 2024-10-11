@@ -47,11 +47,11 @@ class Predictor:
                                      length_scale=1.0 / self.speed)[0][0, 0].data.cpu().float().numpy()
         del stn_tst, x_tst, x_tst_lengths, sid
 
-        wavfile.write(output_path + ".ori.wav", 22050, audio)
+        wavfile.write(output_path + ".0.wav", 22050, audio)
         audio = np.int16(audio * 32768)
-        wavfile.write(output_path + ".s1.wav", 22050, audio)
+        wavfile.write(output_path + ".1.wav", 22050, audio)
         audio = AudioSegment.from_wav(output_path + ".s1.wav")
-        audio.export(output_path + ".dest.mp3", format="mp3")
+        audio.export(output_path + ".2.mp3", format="mp3")
 
 
 if __name__ == '__main__':
