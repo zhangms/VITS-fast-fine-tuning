@@ -1,5 +1,4 @@
 import argparse
-import os
 
 import numpy as np
 import torch
@@ -47,12 +46,12 @@ class Predictor:
             audio = self.net_g.infer(x_tst, x_tst_lengths, sid=sid, noise_scale=.667, noise_scale_w=0.8,
                                      length_scale=1.0 / self.speed)[0][0, 0].data.cpu().float().numpy()
         del stn_tst, x_tst, x_tst_lengths, sid
+
+        wavfile.write(output_path + ".ori.wav", 22050, audio)
         audio = np.int16(audio * 32768)
-        wavfile.write(output_path, 22050, audio)
-        audio = AudioSegment.from_wav(output_path)
-        os.remove(output_path)
-        output_path = output_path.replace('.wav', '.mp3')
-        audio.export(output_path, format="mp3")
+        wavfile.write(output_path + ".s1.wav", 22050, audio)
+        audio = AudioSegment.from_wav(output_path + ".s1.wav")
+        audio.export(output_path + ".dest.mp3", format="mp3")
 
 
 if __name__ == '__main__':
@@ -64,6 +63,6 @@ if __name__ == '__main__':
     print("config_path:", args.config_path)
     predictor = Predictor(args.model_path, args.config_path)
     predictor.tts_fn_id("Hey there! I'm always down for a chat. What's on your mind?", 0,
-                        "/workspace/res/output/test0.wav")
+                        "/workspace/res/output/test0")
     predictor.tts_fn_id("Hey there! I'm always down for a chat. What's on your mind?", 1,
-                        "/workspace/res/output/test1.wav")
+                        "/workspace/res/output/test1")
