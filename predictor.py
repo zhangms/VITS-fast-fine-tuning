@@ -68,6 +68,11 @@ if __name__ == '__main__':
     print("model_path:", args.model_path)
     print("config_path:", args.config_path)
     predictor = Predictor(args.model_path, args.config_path)
+
+    print(predictor.hps["speakers"]["Binary"])
+    print(predictor.hps["speakers"]["Dara"])
+    print(predictor.hps["speakers"]["FFF"])
+
     predictor.tts_fn("Hey there! I'm always down for a chat. What's on your mind?", "Binary",
                      "/workspace/res/output/test0.mp3")
     predictor.tts_fn("Hey there! I'm always down for a chat. What's on your mind?", "Dara",
