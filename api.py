@@ -20,8 +20,11 @@ class AudGenerateResponseBase64(BaseModel):
     audio: str
 
 
+root_path = os.path.split(os.path.realpath(__file__))[0]
 app = FastAPI()
-predictor = Predictor("./OUTPUT_MODEL/G_latest.pth", "./OUTPUT_MODEL/config.json")
+predictor = Predictor(root_path + "/OUTPUT_MODEL/G_latest.pth", root_path + "./OUTPUT_MODEL/config.json")
+
+os.makedirs(root_path + "/OUTPUT/", exist_ok=True)
 
 
 def encode_audio(audio_file):
@@ -42,10 +45,10 @@ async def audio_generate_base64(req: AudGenerateRequest):
         st = time.time()
         text = req.text
         speaker_id = req.speaker_id
-        output_path = "./OUTPUT/" + str(uuid.uuid4()) + ".mp3"
-        predictor.tts_fn(text, speaker_id=speaker_id, output_path=output_path)
-        audio_content = encode_audio(output_path)
-        os.remove(output_path)
+        save = root_path + "/OUTPUT/" + str(uuid.uuid4()) + ".mp3"
+        predictor.tts_fn(text, speaker_id=speaker_id, output_path=save)
+        audio_content = encode_audio(save)
+        os.remove(save)
         print("TTS_END:[TraceId:{}] req:{}, rt:{} s.".format(req.trace_id, req, (time.time() - st)))
         return {"audio": audio_content, }
     except Exception as e:
