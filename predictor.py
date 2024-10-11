@@ -77,5 +77,9 @@ if __name__ == '__main__':
     print(predictor.hps["speakers"]["Binary"])
     print(predictor.hps["speakers"]["Dara"])
 
-    predictor.tts_fn("Hey there! I'm always down for a chat. What's on your mind?", "Binary",
-                     "/workspace/VITS-fast-fine-tuning/OUTPUT/c13501f8-d53e-4b89-a335-bb54eb6e055f.mp3")
+    try:
+        ret = predictor.tts_fn("Hey there! I'm always down for a chat. What's on your mind?", "Binary",
+                               "/workspace/VITS-fast-fine-tuning/OUTPUT/c13501f8-d53e-4b89-a335-bb54eb6e055f.mp3")
+        print(ret)
+    except Exception as e:
+        raise e
