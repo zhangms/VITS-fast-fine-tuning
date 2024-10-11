@@ -63,4 +63,7 @@ if __name__ == '__main__':
     print("model_path:", args.model_path)
     print("config_path:", args.config_path)
     predictor = Predictor(args.model_path, args.config_path)
-    predictor.tts_fn_id("hello world", 0, "/workspace/res/output/test.wav")
+    predictor.tts_fn_id("Hey there! I'm always down for a chat. What's on your mind?", 0,
+                        "/workspace/res/output/test0.wav")
+    predictor.tts_fn_id("Hey there! I'm always down for a chat. What's on your mind?", 1,
+                        "/workspace/res/output/test1.wav")
