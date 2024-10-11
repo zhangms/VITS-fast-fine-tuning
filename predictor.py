@@ -78,6 +78,4 @@ if __name__ == '__main__':
     print(predictor.hps["speakers"]["Dara"])
 
     predictor.tts_fn("Hey there! I'm always down for a chat. What's on your mind?", "Binary",
-                     "/workspace/res/output/test0.mp3")
-    predictor.tts_fn("Hey there! I'm always down for a chat. What's on your mind?", "Dara",
-                     "/workspace/res/output/test1.mp3")
+                     "/workspace/VITS-fast-fine-tuning/OUTPUT/c13501f8-d53e-4b89-a335-bb54eb6e055f.mp3")
