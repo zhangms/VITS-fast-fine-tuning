@@ -63,4 +63,4 @@ if __name__ == '__main__':
     print("model_path:", args.model_path)
     print("config_path:", args.config_path)
     predictor = Predictor(args.model_path, args.config_path)
-    predictor.tts_fn_id("hello world", 0, "./output.wav")
+    predictor.tts_fn_id("hello world", 0, "/workspace/res/output/test.wav")
