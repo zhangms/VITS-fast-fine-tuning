@@ -53,5 +53,5 @@ async def audio_generate_base64(req: AudGenerateRequest):
         print("TTS_END:[TraceId:{}] req:{}, rt:{} s.".format(req.trace_id, req, (time.time() - st)))
         return {"audio": audio_content, }
     except Exception as e:
-        print("TTS_ERR:[TraceId:{}] req:{}, time:{}".format(req.trace_id, req, datetime.now()))
+        print("TTS_ERR:[TraceId:{}] req:{}, time:{}, err:{}".format(req.trace_id, req, datetime.now(), str(e)))
         raise HTTPException(status_code=500, detail=str(e))
