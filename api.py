@@ -21,9 +21,10 @@ class AudGenerateResponseBase64(BaseModel):
 
 
 root_path = os.path.split(os.path.realpath(__file__))[0]
+print("__file__", __file__)
+print("root_path", root_path)
 app = FastAPI()
 predictor = Predictor(root_path + "/OUTPUT_MODEL/G_latest.pth", root_path + "./OUTPUT_MODEL/config.json")
-
 os.makedirs(root_path + "/OUTPUT/", exist_ok=True)
 
 
