@@ -58,11 +58,8 @@ class Predictor:
         return "OK"
 
     def tts_fn(self, text, speaker_id, output_path):
-        if speaker_id not in self.hps["speakers"]:
-            n_speaker_id = self.hps["speakers"][speaker_id]
-            return self.tts_fn_id(text, n_speaker_id, output_path)
-        else:
-            return "speaker not exists:" + speaker_id
+        n_speaker_id = self.hps["speakers"][speaker_id]
+        return self.tts_fn_id(text, n_speaker_id, output_path)
 
 
 if __name__ == '__main__':
