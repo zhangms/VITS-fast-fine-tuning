@@ -1,4 +1,5 @@
 import argparse
+import os
 
 import numpy as np
 import torch
@@ -47,11 +48,16 @@ class Predictor:
                                      length_scale=1.0 / self.speed)[0][0, 0].data.cpu().float().numpy()
         del stn_tst, x_tst, x_tst_lengths, sid
 
-        wavfile.write(output_path + ".0.wav", 22050, audio)
+        wav = output_path + ".wav"
         audio = np.int16(audio * 32768)
-        wavfile.write(output_path + ".1.wav", 22050, audio)
-        audio = AudioSegment.from_wav(output_path + ".1.wav")
-        audio.export(output_path + ".2.mp3", format="mp3")
+        wavfile.write(wav, 22050, audio)
+        audio = AudioSegment.from_wav(wav)
+        os.remove(wav)
+        audio.export(output_path, format="mp3")
+
+    def tts_fn(self, text, speaker_id, output_path):
+        n_speaker_id = self.hps["speakers"][speaker_id]
+        self.tts_fn_id(text, n_speaker_id, output_path)
 
 
 if __name__ == '__main__':
@@ -62,7 +68,7 @@ if __name__ == '__main__':
     print("model_path:", args.model_path)
     print("config_path:", args.config_path)
     predictor = Predictor(args.model_path, args.config_path)
-    predictor.tts_fn_id("Hey there! I'm always down for a chat. What's on your mind?", 0,
-                        "/workspace/res/output/test0")
-    predictor.tts_fn_id("Hey there! I'm always down for a chat. What's on your mind?", 1,
-                        "/workspace/res/output/test1")
+    predictor.tts_fn("Hey there! I'm always down for a chat. What's on your mind?", "Binary",
+                     "/workspace/res/output/test0.mp3")
+    predictor.tts_fn("Hey there! I'm always down for a chat. What's on your mind?", "Dara",
+                     "/workspace/res/output/test1.mp3")
