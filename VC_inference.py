@@ -12,8 +12,10 @@ import librosa
 import webbrowser
 
 from text import text_to_sequence, _clean_text
+
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 import logging
+
 logging.getLogger("PIL").setLevel(logging.WARNING)
 logging.getLogger("urllib3").setLevel(logging.WARNING)
 logging.getLogger("markdown_it").setLevel(logging.WARNING)
@@ -28,12 +30,15 @@ language_marks = {
     "Mix": "",
 }
 lang = ['日本語', '简体中文', 'English', 'Mix']
+
+
 def get_text(text, hps, is_symbol):
     text_norm = text_to_sequence(text, hps.symbols, [] if is_symbol else hps.data.text_cleaners)
     if hps.data.add_blank:
         text_norm = commons.intersperse(text_norm, 0)
     text_norm = LongTensor(text_norm)
     return text_norm
+
 
 def create_tts_fn(model, hps, speaker_ids):
     def tts_fn(text, speaker, language, speed):
@@ -51,6 +56,7 @@ def create_tts_fn(model, hps, speaker_ids):
         return "Success", (hps.data.sampling_rate, audio)
 
     return tts_fn
+
 
 def create_vc_fn(model, hps, speaker_ids):
     def vc_fn(original_speaker, target_speaker, record_audio, upload_audio):
@@ -83,6 +89,8 @@ def create_vc_fn(model, hps, speaker_ids):
         return "Success", (hps.data.sampling_rate, audio)
 
     return vc_fn
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--model_dir", default="./G_latest.pth", help="directory to your fine-tuned model")
@@ -91,7 +99,6 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     hps = utils.get_hparams_from_file(args.config_dir)
-
 
     net_g = SynthesizerTrn(
         len(hps.symbols),
@@ -124,7 +131,7 @@ if __name__ == "__main__":
                     audio_output = gr.Audio(label="Output Audio", elem_id="tts-audio")
                     btn = gr.Button("Generate!")
                     btn.click(tts_fn,
-                              inputs=[textbox, char_dropdown, language_dropdown, duration_slider,],
+                              inputs=[textbox, char_dropdown, language_dropdown, duration_slider, ],
                               outputs=[text_output, audio_output])
         with gr.Tab("Voice Conversion"):
             gr.Markdown("""
@@ -143,4 +150,3 @@ if __name__ == "__main__":
                       outputs=[message_box, converted_audio])
     webbrowser.open("http://127.0.0.1:7860")
     app.launch(share=args.share)
-
