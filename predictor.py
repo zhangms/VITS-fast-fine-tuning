@@ -12,6 +12,7 @@ class Predictor:
     def __init__(self, model_path, config_path):
         self.speed = 1.1
         self.hps = utils.get_hparams_from_file(config_path)
+        print(self.hps)
         self.net_g = SynthesizerTrn(
             len(self.hps.symbols),
             self.hps.data.filter_length // 2 + 1,
@@ -29,3 +30,4 @@ if __name__ == '__main__':
     args = parser.parse_args()
     print("model_path:", args.model_path)
     print("config_path:", args.config_path)
+    predictor = Predictor(args.model_path, args.config_path)
