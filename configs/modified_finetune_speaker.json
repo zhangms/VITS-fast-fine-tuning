@@ -34,7 +34,7 @@
     "mel_fmin": 0.0,
     "mel_fmax": null,
     "add_blank": true,
-    "n_speakers": 2,
+    "n_speakers": 9,
     "cleaned_text": true
   },
   "model": {
@@ -166,7 +166,14 @@
     "\uff30"
   ],
   "speakers": {
-    "dingzhen": 0,
-    "taffy": 1
+    "Binary": 0,
+    "Dara": 1,
+    "Fantasm": 2,
+    "MaXine": 3,
+    "Neon": 4,
+    "Pyro": 5,
+    "Vigor": 6,
+    "Vio": 7,
+    "Ziggy": 8
   }
 }
