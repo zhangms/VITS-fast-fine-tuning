@@ -17,7 +17,7 @@ device = "cuda:0" if torch.cuda.is_available() else "cpu"
 
 class Predictor:
     def __init__(self, model_path, config_path):
-        self.speed = 1.1
+        self.speed = 1.0
         self.hps = utils.get_hparams_from_file(config_path)
         print(self.hps)
         self.net_g = SynthesizerTrn(
