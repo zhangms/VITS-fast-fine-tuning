@@ -17,6 +17,7 @@ def tts_fn(text, speaker):
 
 
 if __name__ == "__main__":
+    print("speakers:", predictor.get_speakers())
     speakers = predictor.get_speakers().keys()
     app = gr.Blocks()
     with app:
