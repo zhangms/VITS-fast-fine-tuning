@@ -26,7 +26,8 @@ if __name__ == "__main__":
                 with gr.Column():
                     textbox = gr.TextArea(label="Text",
                                           placeholder="Type your sentence here",
-                                          value="hello world", elem_id=f"tts-input")
+                                          value="Hey, how's it going? What's on your mind today?",
+                                          elem_id=f"tts-input")
                     # select character
                     char_dropdown = gr.Dropdown(choices=speakers, value=speakers[0], label='character')
                 with gr.Column():
