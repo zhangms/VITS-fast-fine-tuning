@@ -42,4 +42,4 @@ if __name__ == "__main__":
                     btn.click(tts_fn,
                               inputs=[textbox, char_dropdown, language_dropdown, duration_slider, ],
                               outputs=[text_output, audio_output])
-    app.launch(share=False)
+    app.launch(share=False, server_port=7080)
