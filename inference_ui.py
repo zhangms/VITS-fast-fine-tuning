@@ -1,18 +1,19 @@
+import os
+
 import gradio as gr
 
+from predictor import Predictor
 
-# from predictor import Predictor
-#
-# root_path = os.path.split(os.path.realpath(__file__))[0]
-# print("__file__", __file__)
-# print("root_path", root_path)
-# predictor = Predictor(root_path + "/OUTPUT_MODEL/G_latest.pth", root_path + "/OUTPUT_MODEL/config.json")
-# os.makedirs(root_path + "/OUTPUT/", exist_ok=True)
+root_path = os.path.split(os.path.realpath(__file__))[0]
+print("__file__", __file__)
+print("root_path", root_path)
+predictor = Predictor(root_path + "/OUTPUT_MODEL/G_latest.pth", root_path + "/OUTPUT_MODEL/config.json")
 
 
 def tts_fn(text, speaker):
-    print("hello world:", text, speaker)
-    return "Success", None
+    print("INFERENCE_UI:", text, speaker)
+    audio = predictor.predict_id(text, speaker, 1.0, "EN")
+    return "Success", (predictor.sampling_rate(), audio)
 
 
 if __name__ == "__main__":

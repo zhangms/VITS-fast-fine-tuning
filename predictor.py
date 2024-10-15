@@ -37,18 +37,25 @@ class Predictor:
         text_norm = LongTensor(text_norm)
         return text_norm
 
-    def tts_fn_id(self, text, n_speaker_id, output_path):
+    def predict(self, text, n_speaker_id, speed, language):
         if text is not None:
-            text = "[EN]" + text + "[EN]"
+            text = "[" + language + "]" + text + "[" + language + "]"
         stn_tst = self.get_text(text, False)
         with no_grad():
             x_tst = stn_tst.unsqueeze(0).to(device)
             x_tst_lengths = LongTensor([stn_tst.size(0)]).to(device)
             sid = LongTensor([n_speaker_id]).to(device)
             audio = self.net_g.infer(x_tst, x_tst_lengths, sid=sid, noise_scale=.667, noise_scale_w=0.8,
-                                     length_scale=1.0 / self.speed)[0][0, 0].data.cpu().float().numpy()
+                                     length_scale=1.0 / speed)[0][0, 0].data.cpu().float().numpy()
         del stn_tst, x_tst, x_tst_lengths, sid
+        return audio
 
+    def predict_id(self, text, speaker_id, speed, language):
+        n_speaker_id = self.hps["speakers"][speaker_id]
+        return self.predict(text, n_speaker_id, speed, language)
+
+    def tts_fn_id(self, text, n_speaker_id, output_path):
+        audio = self.predict(text, n_speaker_id, self.speed, "EN")
         wav = output_path + ".wav"
         audio = np.int16(audio * 32768)
         wavfile.write(wav, 22050, audio)
@@ -63,6 +70,9 @@ class Predictor:
 
     def get_speakers(self):
         return self.hps["speakers"]
+
+    def sampling_rate(self):
+        return self.hps.data["sampling_rate"]
 
 
 if __name__ == '__main__':
