@@ -10,8 +10,8 @@ import gradio as gr
 # os.makedirs(root_path + "/OUTPUT/", exist_ok=True)
 
 
-def tts_fn(text, speaker, language, speed):
-    print("hello world")
+def tts_fn(text, speaker):
+    print("hello world:", text, speaker)
     return "Success", None
 
 
@@ -29,14 +29,11 @@ if __name__ == "__main__":
                                           value="hello world", elem_id=f"tts-input")
                     # select character
                     char_dropdown = gr.Dropdown(choices=speakers, value=speakers[0], label='character')
-                    language_dropdown = gr.Dropdown(choices=lang, value=lang[0], label='language')
-                    duration_slider = gr.Slider(minimum=0.1, maximum=5, value=1, step=0.1,
-                                                label='速度 Speed')
                 with gr.Column():
                     text_output = gr.Textbox(label="Message")
                     audio_output = gr.Audio(label="Output Audio", elem_id="tts-audio")
                     btn = gr.Button("Generate!")
                     btn.click(tts_fn,
-                              inputs=[textbox, char_dropdown, language_dropdown, duration_slider, ],
+                              inputs=[textbox, char_dropdown],
                               outputs=[text_output, audio_output])
     app.launch(share=False, server_port=7080, server_name="0.0.0.0")
