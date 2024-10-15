@@ -1,14 +1,13 @@
-import os
-
 import gradio as gr
 
-from predictor import Predictor
 
-root_path = os.path.split(os.path.realpath(__file__))[0]
-print("__file__", __file__)
-print("root_path", root_path)
-predictor = Predictor(root_path + "/OUTPUT_MODEL/G_latest.pth", root_path + "/OUTPUT_MODEL/config.json")
-os.makedirs(root_path + "/OUTPUT/", exist_ok=True)
+# from predictor import Predictor
+#
+# root_path = os.path.split(os.path.realpath(__file__))[0]
+# print("__file__", __file__)
+# print("root_path", root_path)
+# predictor = Predictor(root_path + "/OUTPUT_MODEL/G_latest.pth", root_path + "/OUTPUT_MODEL/config.json")
+# os.makedirs(root_path + "/OUTPUT/", exist_ok=True)
 
 
 def tts_fn(text, speaker, language, speed):
@@ -17,10 +16,8 @@ def tts_fn(text, speaker, language, speed):
 
 
 if __name__ == "__main__":
-    speakerMap = predictor.get_speakers()
-    speakers = speakerMap.keys()
-
     lang = ["EN"]
+    speakers = ["Jack", "Michael", "Bob"]
 
     app = gr.Blocks()
     with app:
