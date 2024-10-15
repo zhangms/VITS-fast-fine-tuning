@@ -10,6 +10,16 @@ docker run \
 
 ```
 
+docker run \
+    -v /data/workspace/res:/workspace/res \
+    --shm-size=16g \
+    -p 7080:7080 \
+    -d --gpus all --name fastvits registry-intl.ap-southeast-1.aliyuncs.com/pff-x-server/fastvits-bsae:inf1 /workspace/run.sh
+
+```
+
+```
+
 cd /workspace/VITS-fast-fine-tuning
 
 ln -s /workspace/res/raw_audio ./raw_audio

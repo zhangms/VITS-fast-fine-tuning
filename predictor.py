@@ -61,6 +61,9 @@ class Predictor:
         n_speaker_id = self.hps["speakers"][speaker_id]
         return self.tts_fn_id(text, n_speaker_id, output_path)
 
+    def get_speakers(self):
+        return self.hps["speakers"]
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
