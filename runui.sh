@@ -1,0 +1,1 @@
+nohup python inference_ui.py > ui.log &
