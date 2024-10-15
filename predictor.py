@@ -57,8 +57,8 @@ class Predictor:
     def tts_fn_id(self, text, n_speaker_id, output_path):
         audio = self.predict(text, n_speaker_id, self.speed, "EN")
         wav = output_path + ".wav"
-        audio = np.int16(audio * 32768)
-        wavfile.write(wav, 22050, audio)
+        audio = np.int16(audio * self.max_wav_value())
+        wavfile.write(wav, self.sampling_rate(), audio)
         audio = AudioSegment.from_wav(wav)
         os.remove(wav)
         audio.export(output_path, format="mp3")
@@ -73,6 +73,9 @@ class Predictor:
 
     def sampling_rate(self):
         return self.hps.data["sampling_rate"]
+
+    def max_wav_value(self):
+        return self.hps.data["max_wav_value"]
 
 
 if __name__ == '__main__':
