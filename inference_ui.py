@@ -17,9 +17,7 @@ def tts_fn(text, speaker):
 
 
 if __name__ == "__main__":
-    lang = ["EN"]
-    speakers = ["Jack", "Michael", "Bob"]
-
+    speakers = predictor.get_speakers().keys()
     app = gr.Blocks()
     with app:
         with gr.Tab("Text-to-Speech"):
